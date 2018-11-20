@@ -89,6 +89,17 @@ typedef struct img_folder {
     char set_out_format;
 } img_fol_t;
 
+static void show_packet_summary(void)
+{
+	extern OPJ_INT32 g_no_packets_decoded;
+	extern OPJ_INT32 g_no_packets_encoded;
+	extern OPJ_INT32 g_no_packets_skipped;
+
+	fprintf(stdout, "[DEBUG] packets decoded = %i\n", g_no_packets_decoded);
+	fprintf(stdout, "[DEBUG] packets encoded = %i\n", g_no_packets_encoded);
+	fprintf(stdout, "[DEBUG] packets skipped = %i\n", g_no_packets_skipped);
+}
+
 static void encode_help_display(void)
 {
     fprintf(stdout,
@@ -2040,6 +2051,8 @@ int main(int argc, char **argv)
         fprintf(stdout, "encode time: %d ms \n",
                 (int)((t * 1000.0) / (OPJ_FLOAT64)num_compressed_files));
     }
+
+    show_packet_summary();
 
     return 0;
 

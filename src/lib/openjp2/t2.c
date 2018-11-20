@@ -598,6 +598,8 @@ void opj_t2_destroy(opj_t2_t *t2)
     }
 }
 
+OPJ_INT32 g_no_packets_decoded = 0;
+
 static OPJ_BOOL opj_t2_decode_packet(opj_t2_t* p_t2,
                                      opj_tcd_tile_t *p_tile,
                                      opj_tcp_t *p_tcp,
@@ -611,6 +613,8 @@ static OPJ_BOOL opj_t2_decode_packet(opj_t2_t* p_t2,
     OPJ_BOOL l_read_data;
     OPJ_UINT32 l_nb_bytes_read = 0;
     OPJ_UINT32 l_nb_total_bytes_read = 0;
+
+    g_no_packets_decoded++;
 
     *p_data_read = 0;
 
@@ -640,6 +644,8 @@ static OPJ_BOOL opj_t2_decode_packet(opj_t2_t* p_t2,
     return OPJ_TRUE;
 }
 
+OPJ_INT32 g_no_packets_encoded = 0;
+
 static OPJ_BOOL opj_t2_encode_packet(OPJ_UINT32 tileno,
                                      opj_tcd_tile_t * tile,
                                      opj_tcp_t * tcp,
@@ -668,6 +674,8 @@ static OPJ_BOOL opj_t2_encode_packet(OPJ_UINT32 tileno,
 
     opj_bio_t *bio = 00;    /* BIO component */
     OPJ_BOOL packet_empty = OPJ_TRUE;
+
+    g_no_packets_encoded++;
 
     /* <SOP 0xff91> */
     if (tcp->csty & J2K_CP_CSTY_SOP) {
@@ -950,6 +958,8 @@ static OPJ_BOOL opj_t2_encode_packet(OPJ_UINT32 tileno,
     return OPJ_TRUE;
 }
 
+OPJ_INT32 g_no_packets_skipped = 0;
+
 static OPJ_BOOL opj_t2_skip_packet(opj_t2_t* p_t2,
                                    opj_tcd_tile_t *p_tile,
                                    opj_tcp_t *p_tcp,
@@ -963,6 +973,8 @@ static OPJ_BOOL opj_t2_skip_packet(opj_t2_t* p_t2,
     OPJ_BOOL l_read_data;
     OPJ_UINT32 l_nb_bytes_read = 0;
     OPJ_UINT32 l_nb_total_bytes_read = 0;
+
+    g_no_packets_skipped++;
 
     *p_data_read = 0;
 
