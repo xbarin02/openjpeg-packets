@@ -93,6 +93,17 @@ static int parse_cmdline_decoder(int argc, char **argv,
                                  opj_dparameters_t *parameters, img_fol_t *img_fol);
 
 /* -------------------------------------------------------------------------- */
+static void show_packet_summary(void)
+{
+	extern OPJ_INT32 g_no_packets_decoded;
+	extern OPJ_INT32 g_no_packets_encoded;
+	extern OPJ_INT32 g_no_packets_skipped;
+
+	fprintf(stdout, "[DEBUG] packets decoded = %i\n", g_no_packets_decoded);
+	fprintf(stdout, "[DEBUG] packets encoded = %i\n", g_no_packets_encoded);
+	fprintf(stdout, "[DEBUG] packets skipped = %i\n", g_no_packets_skipped);
+}
+
 static void decode_help_display(void)
 {
     fprintf(stdout, "\nThis is the opj_dump utility from the OpenJPEG project.\n"
@@ -622,6 +633,8 @@ int main(int argc, char *argv[])
         opj_destroy_cstr_info(&cstr_info);
 
     }
+
+    show_packet_summary();
 
     /* Close the output file */
     fclose(fout);

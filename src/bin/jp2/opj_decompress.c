@@ -175,6 +175,17 @@ int parse_DA_values(char* inArg, unsigned int *DA_x0, unsigned int *DA_y0,
 static opj_image_t* convert_gray_to_rgb(opj_image_t* original);
 
 /* -------------------------------------------------------------------------- */
+static void show_packet_summary(void)
+{
+	extern OPJ_INT32 g_no_packets_decoded;
+	extern OPJ_INT32 g_no_packets_encoded;
+	extern OPJ_INT32 g_no_packets_skipped;
+
+	fprintf(stdout, "[DEBUG] packets decoded = %i\n", g_no_packets_decoded);
+	fprintf(stdout, "[DEBUG] packets encoded = %i\n", g_no_packets_encoded);
+	fprintf(stdout, "[DEBUG] packets skipped = %i\n", g_no_packets_skipped);
+}
+
 static void decode_help_display(void)
 {
     fprintf(stdout,
@@ -1808,6 +1819,9 @@ fin:
         fprintf(stdout, "decode time: %d ms\n",
                 (int)((tCumulative * 1000.0) / (OPJ_FLOAT64)numDecompressedImages));
     }
+
+    show_packet_summary();
+
     return failed ? EXIT_FAILURE : EXIT_SUCCESS;
 }
 /*end main()*/
